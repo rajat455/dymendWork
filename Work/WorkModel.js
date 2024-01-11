@@ -9,7 +9,6 @@ class WorkModel {
             totalPcs:{type:Number, required:true},
             completedPcs:{type:Number, required:true, default:0},
             rejectedPcs:{type:Number, required:true,default:0},
-            acceptedStatus:{type:Number, required:true, default:0}
         }, {
             timestamps:true,
         })

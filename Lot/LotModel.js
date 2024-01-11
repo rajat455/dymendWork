@@ -6,9 +6,13 @@ class LotModel {
             lotNumber: { type: String, required: true },
             kapan: { type: mongoose.Types.ObjectId, required: true, ref: "tbl_kapans" },
             manager: { type: mongoose.Types.ObjectId, default: null, ref: "tbl_users" },
-            totalPcs: { type: Number, required: true },
-            
             weight:{type:Number, required:true},
+            totalPcs: { type: Number, required: true },
+            availabelPcs:{type:Number, required:true},
+            tochingPendingPcs:{type:Number,required:true, default:0},
+            tochingCompletedPcs:{type:Number, required:true, default:0},
+            fourpPendingPcs:{type:Number, required:true, default:0},
+            fourpCompletedPcs:{type:Number, required:true, default:0},
         }, {
             timestamps:true,
             indexes: [
