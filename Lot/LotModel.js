@@ -31,13 +31,31 @@ class LotModel {
     }
 
     // Update Lot
-    updatePcs(purpose, lot, Pcs) {
-        return this.model.updateOne({ _id: lot }, { $inc: purpose == toching ? { availabelPcs: -Pcs, tochingPendingPcs: Pcs, } : { tochingCompletedPcs: -Pcs, fourpPendingPcs: Pcs } })
+    updatePcs(data) {
+        const tochingData = {
+            availabelPcs: -data.totalPcs, 
+            tochingPendingPcs: data.totalPcs 
+        }
+        const fourPData = {
+            tochingCompletedPcs: -data.totalPcs, 
+            fourpPendingPcs: data.totalPcs
+        }
+        return this.model.updateOne({ _id: data.lot }, { $inc: data.purpose == toching ? tochingData : fourPData })
     }
 
-    completeWork(lot, purpose, completedPcs, rejectedPcs, totalPcs){
-        return this.model.updateOne({_id: lot}, { $inc: purpose == toching ? { tochingPendingPcs: -totalPcs, tochingCompletedPcs: completedPcs, availabelPcs: rejectedPcs } : {fourpPendingPcs: -totalPcs, fourpCompletedPcs: completedPcs, tochingCompletedPcs: rejectedPcs}})
+    completeWork(data){
+        const tochingData ={
+            tochingPendingPcs: -data.totalPcs, 
+            tochingCompletedPcs: data.completedPcs, 
+            availabelPcs: data.rejectedPcs
+        }
+        const fourPData = {
+            fourpPendingPcs: -data.totalPcs, 
+            fourpCompletedPcs: data.completedPcs, 
+            tochingCompletedPcs: data.rejectedPcs
+        }
+        return this.model.updateOne({_id: data.lot}, { $inc: data.purpose == toching ? tochingData : fourPData})
     }
 }
 const lotModel = new LotModel()
-module.exports = lotModel
+module.exports = lotModel 

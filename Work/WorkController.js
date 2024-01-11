@@ -13,7 +13,7 @@ class WorkConroller {
             if (!lot || !employee || !purpose || !totalPcs ) return res.status(400).send({ message: MISSING_DEPENDENCY })
             const result = await workModel.insertWork(req.body)
             if (!result) return res.status(400).send({ message: SOMTHING_WENT_WRONG })
-            await lotModel.updatePcs(purpose, lot, totalPcs)
+            await lotModel.updatePcs({...req.body})
             return res.status(200).send({ message: SUCCESS })
         } catch (error) {
             console.log(error);
@@ -23,15 +23,16 @@ class WorkConroller {
 
     async complateWork(req, res) {
         try {
-            const { lot, employee, purpose, completedPcs, rejectedPcs } = req.body
+            const { _id, lot, employee, purpose, completedPcs, rejectedPcs } = req.body
             if (!lot || !employee || !purpose || !completedPcs || !rejectedPcs) return res.status(400).send({ message: MISSING_DEPENDENCY })
-            const ToatalPcs = completedPcs + rejectedPcs
-            const result = await workModel.comWork(lot, completedPcs, rejectedPcs)
+            const totalPcs = completedPcs + rejectedPcs
+            const result = await workModel.comWork({...req.body})
             if (!result) return res.status(400).send({ message: SOMTHING_WENT_WRONG })
-            await lotModel
+            await lotModel.completeWork({...req.body, totalPcs})
             return res.status(200).send({ message: SUCCESS })
         } catch (error) {
-
+            console.log(error);
+            return res.status(500).send({ message: INTERNAL_SERVER_ERROR })
         }
     }
 
@@ -48,7 +49,7 @@ class WorkConroller {
     }
 
     async updateWork(req, res) {
-        
+
     }
 }
 

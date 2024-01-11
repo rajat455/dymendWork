@@ -23,8 +23,8 @@ class WorkModel {
         return this.model.find()
     }
 
-    comWork(id, completedPcs, rejectedPcs) {
-        return this.model.updateOne({ _id: id }, { completedPcs, rejectedPcs })
+    comWork(data) {
+        return this.model.updateOne({ _id: data._id }, { completedPcs: data.completedPcs, rejectedPcs: data.rejectedPcs })
     }
 }
 
