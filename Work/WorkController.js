@@ -11,13 +11,27 @@ class WorkConroller {
         try {
             const { lot, employee, purpose, totalPcs, completedPcs } = req.body
             if (!lot || !employee || !purpose || !totalPcs) return res.status(400).send({ message: MISSING_DEPENDENCY })
-            const result = await workModel.insertLot(req.body)
+            const result = await workModel.insertWork(req.body)
             if (!result) return res.status(400).send({ message: SOMTHING_WENT_WRONG })
             await lotModel.updatePcs(purpose, lot, totalPcs)
             return res.status(200).send({ message: SUCCESS })
         } catch (error) {
             console.log(error);
             return res.status(500).send({ message: INTERNAL_SERVER_ERROR })
+        }
+    }
+
+    async complateWork(req, res) {
+        try {
+            const { lot, employee, purpose, completedPcs, rejectedPcs } = req.body
+            if (!lot || !employee || !purpose || !completedPcs || !rejectedPcs) return res.status(400).send({ message: MISSING_DEPENDENCY })
+            const ToatalPcs = completedPcs + rejectedPcs
+            const result = await workModel.comWork(lot, completedPcs, rejectedPcs)
+            if (!result) return res.status(400).send({ message: SOMTHING_WENT_WRONG })
+            await lotModel
+            return res.status(200).send({ message: SUCCESS })
+        } catch (error) {
+
         }
     }
 

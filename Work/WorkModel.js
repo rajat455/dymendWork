@@ -22,6 +22,10 @@ class WorkModel {
     list() {
         return this.model.find()
     }
+
+    comWork(id, completedPcs, rejectedPcs) {
+        return this.model.updateOne({ _id: id }, { completedPcs, rejectedPcs })
+    }
 }
 
 const workModel = new WorkModel()
