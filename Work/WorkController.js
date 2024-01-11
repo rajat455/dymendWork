@@ -9,8 +9,8 @@ class WorkConroller {
 
     async addWork(req, res) {
         try {
-            const { lot, employee, purpose, totalPcs, completedPcs } = req.body
-            if (!lot || !employee || !purpose || !totalPcs) return res.status(400).send({ message: MISSING_DEPENDENCY })
+            const { lot, employee, purpose, totalPcs } = req.body
+            if (!lot || !employee || !purpose || !totalPcs ) return res.status(400).send({ message: MISSING_DEPENDENCY })
             const result = await workModel.insertWork(req.body)
             if (!result) return res.status(400).send({ message: SOMTHING_WENT_WRONG })
             await lotModel.updatePcs(purpose, lot, totalPcs)
@@ -48,7 +48,7 @@ class WorkConroller {
     }
 
     async updateWork(req, res) {
-
+        
     }
 }
 

@@ -35,7 +35,9 @@ class LotModel {
         return this.model.updateOne({ _id: lot }, { $inc: purpose == toching ? { availabelPcs: -Pcs, tochingPendingPcs: Pcs, } : { tochingCompletedPcs: -Pcs, fourpPendingPcs: Pcs } })
     }
 
-
+    completeWork(lot, purpose, completedPcs, rejectedPcs, totalPcs){
+        return this.model.updateOne({_id: lot}, { $inc: purpose == toching ? { tochingPendingPcs: -totalPcs, tochingCompletedPcs: completedPcs, availabelPcs: rejectedPcs } : {fourpPendingPcs: -totalPcs, fourpCompletedPcs: completedPcs, tochingCompletedPcs: rejectedPcs}})
+    }
 }
 const lotModel = new LotModel()
 module.exports = lotModel
