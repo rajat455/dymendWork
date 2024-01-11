@@ -33,7 +33,7 @@ class LotModel {
     // Update Lot
     updatePcs(data) {
         const tochingData = {
-            availabelPcs: -data.totalPcs, 
+            availabelPcs: -data.totalPcs,  
             tochingPendingPcs: data.totalPcs 
         }
         const fourPData = {

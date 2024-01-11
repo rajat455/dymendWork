@@ -23,8 +23,8 @@ class WorkConroller {
 
     async complateWork(req, res) {
         try {
-            const { _id, lot, employee, purpose, completedPcs, rejectedPcs } = req.body
-            if (!lot || !employee || !purpose || !completedPcs || !rejectedPcs) return res.status(400).send({ message: MISSING_DEPENDENCY })
+            const { _id, lot, purpose, completedPcs, rejectedPcs } = req.body
+            if (!lot || !purpose || !completedPcs || !rejectedPcs) return res.status(400).send({ message: MISSING_DEPENDENCY })
             const totalPcs = completedPcs + rejectedPcs
             const result = await workModel.comWork({...req.body})
             if (!result) return res.status(400).send({ message: SOMTHING_WENT_WRONG })
