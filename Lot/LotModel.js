@@ -16,18 +16,9 @@ class LotModel {
             fourpCompletedPcs: { type: Number, required: true, default: 0 },
         }, {
             timestamps: true,
-            indexes: [
-                {
-                    fields: ['kapan', 'lotNumber'],
-                    unique: true,
-                },
-            ],
         })
+        this.schema.index({ lotNumber: 1, kapan: 1 }, { unique: true });
         this.model = mongoose.model("tbl_lots", this.schema)
-    }
-
-    insertLot(data) {
-        return this.model.create({ ...data })
     }
 
     // Update Lot
